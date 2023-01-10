@@ -97,8 +97,16 @@ async function getApiDataOne() {
     }
   }).then((res: any)=>{
     serverDetails.value.time = res.data.msg
-    let arr = res.data.msg.split(':')
-    let alreadyTimeSum = Number(arr[0]) * 60 * 60 + Number(arr[1]) * 60 + Number(arr[2])
+    let dayArr = res.data.msg.split(' ')
+    let arr = []
+    let alreadyTimeSum = 0
+    if (dayArr.length > 1) {
+      arr = dayArr[1].split(':')
+      alreadyTimeSum = Number(arr[0]) * 3600 + Number(arr[1]) * 60 + Number(arr[2]) + Number(dayArr[0]) * 86400
+    } else {
+      arr = dayArr[0].split(':')
+      alreadyTimeSum = Number(arr[0]) * 3600 + Number(arr[1]) * 60 + Number(arr[2])
+    }
     setTime(alreadyTimeSum)
   })
   getApiData()
