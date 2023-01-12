@@ -66,6 +66,7 @@ async function getApiDataOne() {
       serverDetails.value.server = res.data.msg.content[0]
     }
   })
+  getApiData()
   if (invalidSookie.value) return
   // 可续期时间
   await delayApi({
@@ -105,7 +106,6 @@ async function getApiDataOne() {
     }
     setTime(alreadyTimeSum)
   })
-  getApiData()
 }
 // 计时
 let timer:any = undefined
