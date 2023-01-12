@@ -5,25 +5,21 @@
       <div class="text"><span>到期时间：</span>{{serverDetails.server.EndTime}}</div>
       <div class="text" v-show="serverDetails.server.next_time && serverDetails.time"><span>可续期时间：</span>{{nextTime}}</div>
       <div class="text" v-show="serverDetails.time"><span>运行时间：</span>{{runTime}}</div>
-      <div class="imgBox">
-        <img v-show="serverDetails.img.baseUrl" :src="serverDetails.img.baseUrl" alt="">
-        <div class="imgLoading" v-show="imgLoading">
-          <img src="../../public/loading.png" alt="">
-          <div class="loadingText">重新截屏中</div>
-        </div>
-      </div>
-      <div v-show="serverDetails.img.baseUrl" class="imgTips">当前服务器屏幕</div>
     </div>
     <div class="server" v-else-if="invalidSookie">
-      <div class="title">tolen失效</div>
       <textarea v-model="cookie" class="input"></textarea>
       <div class="btn" @click="setCookie">设置cookie</div>
+    </div>
+    <div class="apiList">
+      <div class="apiItem" v-for="(item,index) in apiList">
+        {{item.date}} {{item.url}}
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
-import { getServerApi, delayApi } from '@/api/app'
+import { getServerApi, delayApi, apiListApi } from '@/api/app'
 onMounted(()=>{
   getApiDataOne()
 })
@@ -137,29 +133,14 @@ function setTime(sum:number) {
     }
   }, 1000)
 }
-const imgLoading = ref(false)
+const apiList = ref<any>([])
 async function getApiData() {
   setTimeout(() => {
     getApiData()
   }, 60000);
   // 截图
-  imgLoading.value = true
-  await getServerApi({
-    data: {
-      cmd: 'getVpsImg',
-      id: '403808'
-    },
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      cookie: cookie.value
-    }
-  }).then((res: any)=>{
-    serverDetails.value.img = res.data
-    let str=res.data.img
-    str = str.split("'")[1]
-    str = str.split("'")[0]
-    serverDetails.value.img.baseUrl = str
-    imgLoading.value = false
+  await apiListApi().then((res: any)=>{
+    apiList.value = res.data
   })
 }
 </script>
@@ -187,65 +168,11 @@ async function getApiData() {
       width: 100px;
     }
   }
-  .imgBox {
-    position: relative;
-    width: 160px;
-    height: 120px;
-    margin: 10px auto;
-    img {
-      display: block;
-      width: 160px;
-      height: 120px;
-    }
-    .imgLoading {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgb(#192b51,.5);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      img {
-        width: 30px;
-        height: 30px;
-        animation: rotate 1.5s linear infinite;
-      }
-      .loadingText {
-        font-size: 12px;
-        margin-top: 8px;
-        color: #1296db;
-      }
-      @keyframes rotate {
-        0% {
-          transform: rotate(0deg);
-        }
-        35% {
-          transform: rotate(180deg);
-        }
-        75% {
-          transform: rotate(270deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    }
-  }
-  .imgTips {
-    text-align: center;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-  }
   .input {
     display: block;
     width: 200px;
-    height: 150px;
-    margin: 10px auto 20px;
+    height: 50px;
+    margin: 10px auto 10px;
     padding: 10px;
     box-sizing: border-box;
   }
@@ -260,6 +187,21 @@ async function getApiData() {
     text-align: center;
     margin: 0 auto;
     font-size: 14px;
+  }
+}
+.apiList {
+  position: absolute;
+  top: 210px;
+  right: 100px;
+  width: 230px;
+  height: 140px;
+  background: rgb(#000, .5);
+  border-radius: 8px;
+  padding: 3px 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  .apiItem {
+    color: #fff;
   }
 }
 </style>

@@ -69,3 +69,11 @@ export function monthDataApi(data: MonthParams) {
     data,
   })
 }
+
+// api列表
+export function apiListApi() {
+  return request({
+    url: '/apiList',
+    method: 'get',
+  })
+}
