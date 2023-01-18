@@ -18,7 +18,6 @@
 import { ref, onMounted } from 'vue';
 import { moneySumApi, monthDataApi } from '@/api/app'
 onMounted(()=>{
-  getMoneySum()
   getMonthData()
   carousel()
 })
@@ -102,7 +101,7 @@ function getMonthData() {
     for (let item of res.data.data.list) {
       if (item.type == 0) {
         expenditure += item.money
-      } else if (item.type == 1) {
+      } else if (item.type == 1 || item.type ==20) {
         income += item.money
       }
       if (isDay) {
@@ -118,6 +117,9 @@ function getMonthData() {
     }
     list.length==1 && list.push(list[0])
     lateList.value = list
+    if (monthlyExpenditure.value!=expenditure || monthlyIncome.value!=income) {
+      getMoneySum()
+    }
     monthlyExpenditure.value = expenditure
     monthlyIncome.value = income
   }).catch(err => {
