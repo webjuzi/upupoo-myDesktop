@@ -7,8 +7,13 @@
     <div class="marquee_box cen" v-if="lateList.length">
       <ul class="marquee_list" :class="{marquee_top:animate}">
         <li v-for="(item, index) in lateList" :key="index" :style="{color: item.type==0?'blue':'red'}">
-          <img class="public" :src="item.category.icon" alt="">
-          <span>{{item.date}}{{item.category.name}}（{{item.fromact}}）{{item.type==0?'支出':'收入'}}{{item.money}}元</span>
+          <div class="typeItem" v-if="item.type == 2">
+            <span style="color:#fff">{{item.descinfo}}转账{{item.money}}元</span>
+          </div>
+          <div class="typeItem" v-else>
+            <img class="public" :src="item.category.icon" alt="">
+            <span>{{item.date}}{{item.category.name}}（{{item.fromact}}）{{item.type==0?'支出':'收入'}}{{item.money}}元</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -197,6 +202,9 @@ function carousel() {
       display: flex;
       justify-content: center;
       font-weight: 700;
+      .typeItem {
+        display: flex;
+      }
       .public {
         display: block;
         width: 16px;
