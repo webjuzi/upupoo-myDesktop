@@ -1,6 +1,5 @@
 
 import request from "@/axios/axios";
-
 // 获取服务器信息
 interface ServerParams {
   data: {
@@ -74,6 +73,14 @@ export function monthDataApi(data: MonthParams) {
 export function apiListApi() {
   return request({
     url: '/apiList',
+    method: 'get',
+  })
+}
+
+// 获取B站粉丝数
+export function bliFansApi() {
+  return request({
+    url: '/bliFans',
     method: 'get',
   })
 }

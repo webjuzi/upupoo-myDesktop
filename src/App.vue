@@ -1,15 +1,18 @@
 <template>
   <div class="app">
     <!-- 服务器信息 -->
-    <Server></Server>
+    <!-- <Server></Server> -->
     <!-- 钱迹 -->
     <Money></Money>
+    <!-- 哔哩哔哩 -->
+    <Bli></Bli>
   </div>
 </template>
 
 <script lang="ts" setup>
 import Server from '@/components/server.vue'
 import Money from '@/components/money.vue'
+import Bli from '@/components/bli.vue'
 </script>
   
 <style lang="scss" scoped>
