@@ -5,7 +5,7 @@
     <!-- 钱迹 -->
     <Money></Money>
     <!-- 哔哩哔哩 -->
-    <Bli></Bli>
+    <!-- <Bli></Bli> -->
   </div>
 </template>
 
