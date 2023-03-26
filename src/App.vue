@@ -1,18 +1,40 @@
 <template>
   <div class="app">
-    <!-- 服务器信息 -->
-    <!-- <Server></Server> -->
     <!-- 钱迹 -->
-    <Money></Money>
+    <Money ref="moneyRef" v-if="apiData.assetList" :assetList="apiData.assetList" :billList="apiData.billList"></Money>
     <!-- 哔哩哔哩 -->
     <!-- <Bli></Bli> -->
   </div>
 </template>
 
 <script lang="ts" setup>
-import Server from '@/components/server.vue'
+import { ref, onMounted } from 'vue';
+import request from "@/axios/axios";
 import Money from '@/components/money.vue'
 import Bli from '@/components/bli.vue'
+const apiData = ref<any>({})
+const moneyRef = ref<any>(null)
+onMounted(() => {
+  getApiData()
+})
+function getApiData() {
+  request({
+    url: '/desktop',
+    method: 'get',
+  }).then(res => {
+    apiData.value = res
+    setTimeout(() => {
+      moneyRef.value.getFun()
+    }, 0);
+    setTimeout(() => {
+      getApiData()
+    }, 1000 * 60);
+  }).catch(err => {
+    setTimeout(() => {
+      getApiData()
+    }, 1000 * 60);
+  })
+}
 </script>
   
 <style lang="scss" scoped>

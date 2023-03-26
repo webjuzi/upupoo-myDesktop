@@ -1,7 +1,6 @@
 import axios from 'axios'
 const service = axios.create({
-  // baseURL: 'http://localhost:5005',
-  baseURL: 'http://api.inav.site:5005',
+  baseURL: 'https://fc-mp-7bb6a3c5-0fb6-4f30-93c8-39aff081b52c.next.bspapp.com',
   timeout: 30000, // request timeout
 })
 // 请求拦截
