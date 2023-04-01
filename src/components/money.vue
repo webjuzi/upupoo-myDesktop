@@ -73,6 +73,7 @@ const monthlyIncome = ref<number>(0)
 const monthlyBalance = ref<number>(0)
 function getMonthData(billList: any) {
   currentMonth.value = billList.month
+  if (billList.list.length == 0) return // 没有数据时，不执行
   let expenditure = 0 // 支出
   let income = 0 // 收入
   let isDay = true // 是否是当天
