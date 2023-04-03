@@ -28,7 +28,7 @@ function getApiData() {
     }, 0);
     setTimeout(() => {
       getApiData()
-    }, 1000 * 60);
+    }, 1000 * 60 * 60);
   }).catch(err => {
     setTimeout(() => {
       getApiData()
