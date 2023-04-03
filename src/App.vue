@@ -32,7 +32,7 @@ function getApiData() {
   }).catch(err => {
     setTimeout(() => {
       getApiData()
-    }, 1000 * 60);
+    }, 1000 * 60 * 60);
   })
 }
 </script>
