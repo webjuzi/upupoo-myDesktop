@@ -23,6 +23,7 @@ function getApiData() {
     method: 'get',
   }).then(res => {
     apiData.value = res
+    console.log(apiData.value)
     setTimeout(() => {
       moneyRef.value.getFun()
     }, 0);
